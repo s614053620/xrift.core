@@ -4,7 +4,6 @@ import java.io.Closeable;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Queue;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,7 +26,7 @@ public abstract class AutoReleaseFixedObjectPool<T extends Closeable>
 
   private static final Logger loger = LoggerFactory.getLogger(AutoReleaseFixedObjectPool.class);
   
-  protected final AtomicBoolean closing = new AtomicBoolean(false);
+  protected volatile boolean closing = false;
   protected Map<T, ObjectEntity<T>> mgrBeans = new HashMap<>();
 
   private final long avaliableTime;
@@ -72,7 +71,7 @@ public abstract class AutoReleaseFixedObjectPool<T extends Closeable>
 
   @Override
   public ObjectEntity<T> getObject() {
-    if (!closing.get()){
+    if (!closing){
       return super.getObject();
     }
     throw new IllegalStateException("closing");
@@ -98,9 +97,10 @@ public abstract class AutoReleaseFixedObjectPool<T extends Closeable>
   @Override
   public void close() throws Exception {
     loger.info("closing pool.");
-    if (!closing.compareAndSet(false, true)) {
+    if (closing) {
       throw new IllegalStateException("closing!");
     }
+    closing = true;
     watchingService.stopWatching();
     // close all resources.
     tryCloseAll();

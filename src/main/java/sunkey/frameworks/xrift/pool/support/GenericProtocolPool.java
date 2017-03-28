@@ -11,8 +11,9 @@ public class GenericProtocolPool implements ObjectPool<XProtocol> {
   private final InnerPool targetPool;
 
   public GenericProtocolPool(Args arg) {
-    targetPool = new InnerPool();
     this.provider = arg.getProvider();
+    targetPool = new InnerPool();
+    targetPool.startWatchResources(AutoReleaseFixedObjectPool.DEFAULT_WATCHING_INTERVAL);
   }
 
   @Override

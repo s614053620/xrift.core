@@ -22,7 +22,7 @@ import org.apache.thrift.transport.TTransport;
 import sunkey.frameworks.xrift.protocol.XProtocol;
 public abstract class AbstractProtocolProvider implements ProtocolProvider {
 
-  public static final Map<String, Class<?>> PROTOCOL_CLASS = new HashMap<>();
+  protected static final Map<String, Class<?>> PROTOCOL_CLASS = new HashMap<>();
 
   static {
     PROTOCOL_CLASS.put("compact", TCompactProtocol.class);
@@ -31,12 +31,12 @@ public abstract class AbstractProtocolProvider implements ProtocolProvider {
     PROTOCOL_CLASS.put("simple-json", TSimpleJSONProtocol.class);
   }
 
-  public static final String DEFAULT_PROTOCOL = "compact";
+  public static final Class<TCompactProtocol> DEFAULT_PROTOCOL = TCompactProtocol.class;
 
   @SuppressWarnings("unchecked")
   public static <T extends TProtocol> Class<T> fromType(String type) {
     Class<T> cz = (Class<T>) PROTOCOL_CLASS.get(type);
-    if (cz == null) return (Class<T>) PROTOCOL_CLASS.get(DEFAULT_PROTOCOL);
+    if (cz == null) return (Class<T>) DEFAULT_PROTOCOL;
     return cz;
   }
 

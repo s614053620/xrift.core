@@ -135,7 +135,7 @@ public abstract class AbstractInvokeContext implements InvokeContext {
     });
     ((InvocableServiceImpl<T>) proxy).setName(serviceName);
     services.add(proxy);
-    objects.add(proxy.getServiceObject());
+    objects.add(proxy.getService());
     return proxy;
   }
 

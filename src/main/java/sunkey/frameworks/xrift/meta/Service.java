@@ -4,7 +4,7 @@ public interface Service<T> {
 
   String getName();
   
-  T getServiceObject();
+  T getService();
   
   Class<T> getServiceType();
   

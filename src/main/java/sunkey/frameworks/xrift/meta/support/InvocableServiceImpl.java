@@ -11,7 +11,7 @@ public class InvocableServiceImpl<T> extends ServiceImpl<T> implements Invocable
   }
   
   public Object handle(Method method, Object ... params){
-    return handler.handle(getServiceObject(), method, params);
+    return handler.handle(getService(), method, params);
   }
   
 }

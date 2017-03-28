@@ -11,6 +11,14 @@ import org.apache.thrift.protocol.TProtocol;
  */
 public interface ProtocolProvider {
 
+  public static enum Type{
+    compact(),
+    binary(),
+    json(),
+    simplejson(),
+    ;
+  }
+  
   // NOT Multiplexed.
   TProtocol getProtocol();
 

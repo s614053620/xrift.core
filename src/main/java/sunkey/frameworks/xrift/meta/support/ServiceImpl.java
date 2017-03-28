@@ -13,10 +13,10 @@ public class ServiceImpl<T> implements Service<T>{
   public void setName(String name) {
     this.name = name;
   }
-  public T getServiceObject() {
+  public T getService() {
     return serviceObject;
   }
-  public void setServiceObject(T serviceObject) {
+  public void setService(T serviceObject) {
     this.serviceObject = serviceObject;
   }
   public Class<T> getServiceType() {

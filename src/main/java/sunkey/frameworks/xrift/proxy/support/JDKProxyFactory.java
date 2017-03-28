@@ -23,7 +23,7 @@ public class JDKProxyFactory extends AbstractServiceProxyFactory {
         return handler.handle(proxy, method, args);
       }
     });
-    service.setServiceObject(proxyObject);
+    service.setService(proxyObject);
     return service;
   }
 

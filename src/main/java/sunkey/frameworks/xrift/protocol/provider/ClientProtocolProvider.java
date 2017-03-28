@@ -1,5 +1,6 @@
 package sunkey.frameworks.xrift.protocol.provider;
 
+import org.apache.thrift.transport.TFramedTransport;
 import org.apache.thrift.transport.TSocket;
 import org.apache.thrift.transport.TTransport;
 import org.apache.thrift.transport.TTransportException;
@@ -50,13 +51,13 @@ public class ClientProtocolProvider extends AbstractProtocolProvider {
 
   @Override
   protected TTransport getTransport() {
-    TSocket soc = new TSocket(address.getHost(), address.getPort());
+    TTransport trans = new TFramedTransport(new TSocket(address.getHost(), address.getPort()));
     try {
-      soc.open();
+      trans.open();
     } catch (TTransportException e) {
       loger.error(e.getMessage(), e);
     }
-    return soc;
+    return trans;
   }
 
 }
